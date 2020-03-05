@@ -27,11 +27,16 @@
           headers: {
             Authorization: `Bearer ${matches[1]}`,
           },
-        }).then(() => {
-          eMessage.textContent = "Auth complete.";
-          document.getElementsByTagName("iframe")[0].src =
-            "https://example.staging.web.wlloyalty.net";
-        });
+        })
+          .then(() => {
+            eMessage.textContent = "Auth complete.";
+            document.getElementsByTagName("iframe")[0].src =
+              "https://example.staging.web.wlloyalty.net/";
+          })
+          .catch(error => {
+            eMessage.textContent = "Auth Error";
+            console.error(error);
+          });
       } else {
         eMessage.textContent = "No token provided.";
       }
