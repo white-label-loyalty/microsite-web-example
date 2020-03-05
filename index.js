@@ -56,9 +56,14 @@ function requestAuthToken(uid, profile) {
     request.on("response", response => {
       response.setEncoding("utf8");
       response.once("data", raw => {
-        const { status, data } = JSON.parse(raw);
-        if (status !== "success") reject(raw);
-        resolve(data.session);
+        console.info("Auth response:", raw);
+        try {
+          const { status, data } = JSON.parse(raw);
+          if (status !== "success") reject(raw);
+          resolve(data.session);
+        } catch (error) {
+          reject(error);
+        }
       });
     });
 
