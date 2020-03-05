@@ -40,6 +40,25 @@
       } else {
         eMessage.textContent = "No token provided.";
       }
+
+      window.addEventListener("message", receiveMessage, false);
+
+      function receiveMessage(event) {
+        // must check that the message origin is legitimate
+        if (event.origin === "https://example.staging.web.wlloyalty.net") {
+          console.info("Received a message from the microsite", event.data);
+        } else {
+          // return immeadiately to prevent further processing.
+          return console.info(
+            "Received a potentially malicious message from an unexpected origin",
+            event.origin
+          );
+        }
+
+        if (event.data.type === "CLAIMED_RECEIPT") {
+          eMessage.textContent = `User completed receipt claim. Current status: ${event.data.body.status}`;
+        }
+      }
     </script>
   </body>
 </html>
