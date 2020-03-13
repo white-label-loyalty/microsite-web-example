@@ -14,30 +14,38 @@
   <body>
     <h1>Embedding the Microsite</h1>
     <p>Below is an example of how the microsite can be embedded.</p>
+    <button id="button">Activate</button>
     <div id="message"></div>
-    <iframe id="microsite"></iframe>
+    <div id="container"></div>
 
     <script>
+      var eButton = document.getElementById("button");
       var eMessage = document.getElementById("message");
-      var eFrame = document.getElementById("microsite");
+      var eContainer = document.getElementById("container");
 
-      window.addEventListener("DOMContentLoaded", activateIframe);
+      eButton.addEventListener("click", activateIframe);
       window.addEventListener("message", receiveMessage, false);
 
       function activateIframe() {
         var matches = document.cookie.match(/WLLTOKEN=(.+);?/);
         if (matches && matches[1]) {
           eMessage.textContent = "Loading...";
-          fetch("https://example.staging.web.wlloyalty.net/api/auth", {
-            mode: "cors",
-            credentials: "include",
-            headers: {
-              Authorization: `Bearer ${matches[1]}`,
-            },
-          })
+          fetch(
+            "https://example.staging.web.wlloyalty.net/api/auth?tenant=deeset-mysteryshop",
+            {
+              mode: "cors",
+              credentials: "include",
+              headers: {
+                Authorization: `Bearer ${matches[1]}`,
+              },
+            }
+          )
             .then(() => {
               eMessage.textContent = "Auth complete.";
-              eFrame.src = "https://example.staging.web.wlloyalty.net/";
+              var eFrame = document.createElement("iframe");
+              eFrame.src =
+                "https://example.staging.web.wlloyalty.net/?tenant=deeset-mysteryshop";
+              eContainer.appendChild(eFrame);
             })
             .catch(error => {
               eMessage.textContent = "Auth Error";

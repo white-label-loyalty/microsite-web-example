@@ -47,10 +47,16 @@ server.listen(5000, () => {
 
 function requestAuthToken(uid, profile) {
   return new Promise((resolve, reject) => {
-    const request = https.request(MICROSITE_ORIGIN + "/api/auth", {
-      method: "POST",
-      headers: { "X-Client-ID": CLIENT_ID, "Content-Type": "application/json" },
-    });
+    const request = https.request(
+      MICROSITE_ORIGIN + "/api/auth?tenant=deeset-mysteryshop",
+      {
+        method: "POST",
+        headers: {
+          "X-Client-ID": CLIENT_ID,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     request.on("error", reject);
     request.on("response", response => {
