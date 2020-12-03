@@ -25,6 +25,7 @@
       window.addEventListener("message", receiveMessage, false);
 
       function activateIframe() {
+        // this process is only required to support cross-domain use in testing
         var matches = document.cookie.match(/WLLTOKEN=(.+);?/);
         if (matches && matches[1]) {
           eMessage.textContent = "Loading...";
@@ -39,7 +40,7 @@
               eMessage.textContent = "Auth complete.";
               eFrame.src = "https://example.staging.web.wlloyalty.net/";
             })
-            .catch(error => {
+            .catch((error) => {
               eMessage.textContent = "Auth Error";
               console.error(error);
             });
