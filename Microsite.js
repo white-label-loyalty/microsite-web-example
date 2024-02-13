@@ -56,8 +56,8 @@ class Microsite {
         response.once("data", (raw) => {
           console.info("Auth response:", raw);
           try {
-            const { status, data } = JSON.parse(raw);
-            if (status !== "success") reject(data);
+            const { status, data, message } = JSON.parse(raw);
+            if (status !== "success") reject({ data, message });
             resolve(data.session);
           } catch (error) {
             reject(error);
