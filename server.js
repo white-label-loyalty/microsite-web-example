@@ -36,7 +36,9 @@ async function requestHandler(request, response) {
   }
 }
 
+const port = 5000;
 const server = http.createServer(requestHandler);
-server.listen(5000, () => {
-  console.log("Demo site availbable at http://localhost:5000");
+
+server.listen(port, () => {
+  console.log(`Demo site availbable at http://localhost:${port}`);
 });
